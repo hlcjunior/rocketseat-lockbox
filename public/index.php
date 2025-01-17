@@ -11,5 +11,5 @@ spl_autoload_register(function ($class) {
 
 session_start();
 
-require "../routes.php";
+require base_path("/config/routes.php");
 

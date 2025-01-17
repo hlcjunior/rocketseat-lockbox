@@ -2,6 +2,8 @@
 
 namespace Core;
 
+use JetBrains\PhpStorm\NoReturn;
+
 class Route
 {
     public array $routes = [];
@@ -37,7 +39,7 @@ class Route
         return $this;
     }
 
-    public function run(): void
+    #[NoReturn] public function run(): void
     {
         $uri = '/' . str_replace(getBaseURL(), '', parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
         $httpMethod = $_SERVER['REQUEST_METHOD'];

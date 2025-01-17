@@ -33,13 +33,13 @@ function dump(...$dump): void
 }
 
 /** @noinspection PhpUnusedParameterInspection */
-function view(string $view, array $data = []): void
+function view(string $view, array $data = []): mixed
 {
     foreach ($data as $key => $value) {
         $$key = $value;
     }
 
-    require base_path("views/template/app.php");
+    return require base_path("views/template/app.php");
 }
 
 function getBaseURL(): string
@@ -54,7 +54,7 @@ function flash(): Flash
 
 function config($chave = null): mixed
 {
-    $config = require base_path('config.php');
+    $config = require base_path('/config/config.php');
 
     if (strlen($chave) > 0) {
         return $config[$chave];
@@ -75,4 +75,9 @@ function auth(): null|object
 function old(string $campo): string
 {
     return $_POST[$campo] ?? '';
+}
+
+function redirect(string $uri): void
+{
+    header("Location: $uri");
 }

@@ -4,6 +4,6 @@ return [
 
     'database' => [
         'driver' => 'sqlite',
-        'database' => '../lockbox.sqlite'
+        'database' => base_path('database/lockbox.sqlite')
     ]
 ];

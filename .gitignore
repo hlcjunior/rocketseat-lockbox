@@ -6,3 +6,5 @@
 /.idea/modules.xml
 /.idea/php.xml
 /.idea/inspectionProfiles/Project_Default.xml
+/database/lockbox.sqlite
+/.idea/vcs.xml

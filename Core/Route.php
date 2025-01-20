@@ -44,6 +44,8 @@ class Route
         $uri = '/' . str_replace(getBaseURL(), '', parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
         $httpMethod = $_SERVER['REQUEST_METHOD'];
 
+
+
         if (!isset($this->routes[$httpMethod][$uri])) {
             abort(404);
         }
@@ -52,10 +54,6 @@ class Route
 
         $class = $routeInfo['class'];
         $method = $routeInfo['method'];
-
-        if(!class_exists($class)){
-            abort(404);
-        }
 
         $c = new $class();
         $c->$method();

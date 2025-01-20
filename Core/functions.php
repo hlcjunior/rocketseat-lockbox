@@ -33,13 +33,13 @@ function dump(...$dump): void
 }
 
 /** @noinspection PhpUnusedParameterInspection */
-function view(string $view, array $data = []): mixed
+function view(string $view, array $data = [], string $template = 'app'): mixed
 {
     foreach ($data as $key => $value) {
         $$key = $value;
     }
 
-    return require base_path("views/template/app.php");
+    return require base_path("views/template/$template.php");
 }
 
 function getBaseURL(): string

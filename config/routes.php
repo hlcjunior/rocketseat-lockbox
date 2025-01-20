@@ -4,7 +4,9 @@ use App\Controllers\DashboardController;
 use App\Controllers\IndexController;
 use App\Controllers\LoginController;
 use App\Controllers\LogoutController;
+use App\Controllers\Notas\CriarController;
 use App\Controllers\RegisterController;
+
 use Core\Route;
 
 (new Route())
@@ -14,6 +16,8 @@ use Core\Route;
     ->post('/login', [LoginController::class, 'login'])
 
     ->get('/dashboard', DashboardController::class)
+    ->get('/notas/criar', [CriarController::class, 'index'])
+    ->post('/notas/criar', [CriarController::class, 'store'])
 
     ->get('/logout', LogoutController::class)
 

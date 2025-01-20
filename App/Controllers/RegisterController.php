@@ -9,7 +9,7 @@ class RegisterController
 {
     public function index()
     {
-        return view('register');
+        return view('register', template:'guest');
     }
 
     /** @noinspection PhpVoidFunctionResultUsedInspection */
@@ -22,7 +22,7 @@ class RegisterController
         ], $_POST);
 
         if ($validacao->naoPassou()) {
-            return view('register');
+            return view('register', template:'guest');
         }
 
         $database = new Database(config('database'));

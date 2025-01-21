@@ -4,7 +4,6 @@ namespace App\Controllers\Notas;
 
 use Core\Database;
 use Core\Validacao;
-use JetBrains\PhpStorm\NoReturn;
 
 class CriarController
 {

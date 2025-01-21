@@ -2,6 +2,8 @@
 
 namespace App\Controllers\Notas;
 
+use JetBrains\PhpStorm\NoReturn;
+
 class CriarController
 {
     public function index()
@@ -10,7 +12,7 @@ class CriarController
         
     }
 
-    public function store()
+    #[NoReturn] public function store(): void
     {
         dd($_POST);
     }

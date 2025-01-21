@@ -8,34 +8,36 @@ class Route
 {
     public array $routes = [];
 
-    public function addRoute(string $httpMethod, string $uri, string|array $controller = null): void
+    public function addRoute(string $httpMethod, string $uri, string|array $controller = null, $middleware = null): void
     {
         if (is_string($controller)) {
             $data = [
                 'class' => $controller,
-                'method' => '__invoke'
+                'method' => '__invoke',
+                'middleware' => $middleware
             ];
         }
 
         if (is_array($controller)) {
             $data = [
                 'class' => $controller[0],
-                'method' => $controller[1]
+                'method' => $controller[1],
+                'middleware' => $middleware
             ];
         }
 
         $this->routes[$httpMethod][$uri] = $data ?? [];
     }
 
-    public function get(string $uri, string|array $controller = null): static
+    public function get(string $uri, string|array $controller = null, $middleware = null): static
     {
-        $this->addRoute('GET', $uri, $controller);
+        $this->addRoute('GET', $uri, $controller, $middleware);
         return $this;
     }
 
-    public function post(string $uri, string|array $controller = null): static
+    public function post(string $uri, string|array $controller = null, $middleware = null): static
     {
-        $this->addRoute('POST', $uri, $controller);
+        $this->addRoute('POST', $uri, $controller, $middleware);
         return $this;
     }
 
@@ -54,6 +56,12 @@ class Route
 
         $class = $routeInfo['class'];
         $method = $routeInfo['method'];
+        $middleware = $routeInfo['middleware'];
+
+        if($middleware){
+            $middleware = new $middleware();
+            $middleware->handle();
+        }
 
         $c = new $class();
         $c->$method();

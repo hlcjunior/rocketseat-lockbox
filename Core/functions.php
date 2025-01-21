@@ -79,5 +79,5 @@ function old(string $campo): string
 
 function redirect(string $uri): void
 {
-    header("Location: $uri");
+    header("Location: ".getBaseURL()."$uri");
 }

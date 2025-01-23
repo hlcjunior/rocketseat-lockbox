@@ -5,7 +5,7 @@
 <div class="bg-base-300 rounded-l-box w-56 flex flex-col divide-y divide-base-100">
     <?php foreach ($notas as $key => $nota): ?>
         <a
-            href="<?= getBaseURL() ?>notas?id=<?= $nota->id ?>"
+            href="<?= getBaseURL() ?>notas?id=<?= $nota->id ?><?=isset($_GET['pesquisar'])?'&pesquisar='.$_GET['pesquisar'] : ''?>"
             class="w-full p-2 cursor-pointer hover:bg-base-200
            <?php if ($key == 0): ?>rounded-tl-box <?php endif; ?>
            <?php if ($nota->id == $notaSelecionada->id): ?>bg-base-200 <?php endif; ?>"
@@ -23,7 +23,7 @@
             </div>
             <input
                 name="titulo" type="text" class="input input-bordered w-full"
-                value="<?= $notaSelecionada->titulo ?>"
+                value="<?= $notaSelecionada->titulo ?? '' ?>"
             />
         </label>
 
@@ -31,7 +31,7 @@
             <div class="label">
                 <span class="label-text">Sua nota</span>
             </div>
-            <textarea name="nota" class="textarea textarea-bordered h-24"><?= $notaSelecionada->nota ?></textarea>
+            <textarea name="nota" class="textarea textarea-bordered h-24"><?= $notaSelecionada->nota ?? '' ?></textarea>
         </label>
 
         <div class="flex justify-between items-center">

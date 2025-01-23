@@ -8,12 +8,19 @@ class IndexController
 {
     public function __invoke()
     {
-        $notas = Nota::all();
+        $pesquisar = $_GET['pesquisar'] ?? null;
 
-        $id = isset($_GET['id']) ?? $notas[0]->id;
+        $notas = Nota::all($pesquisar);
+
+        $id = $_GET['id'] ?? ($notas[0]?->id ?? 0);
         
         $filtro = array_filter($notas, fn($n) => $n->id == $id);
         $notaSelecionada = array_pop($filtro);
+
+        if(!$notaSelecionada){
+            return view('notas/nao-encontrada');
+        }
+
         return view('notas', compact('notas', 'notaSelecionada'));
     }
 }

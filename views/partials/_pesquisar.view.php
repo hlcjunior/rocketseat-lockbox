@@ -1,7 +1,8 @@
 <div class="flex space-x-4">
     <form action="<?=getBaseURL()?>notas" class="w-full">
         <label class="input input-bordered flex items-center gap-2 w-full">
-            <input type="text" name="pesquisar" placeholder="Pesquisar notas no LockBox..." class="grow" />
+            <input type="text" name="pesquisar" placeholder="Pesquisar notas no LockBox..." class="grow"
+            value="<?= $_GET['pesquisar'] ?? '' ?>"/>
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 16 16"

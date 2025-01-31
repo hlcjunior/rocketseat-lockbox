@@ -1,6 +1,7 @@
 <?php
 
 use Core\Flash;
+use Core\Request;
 use JetBrains\PhpStorm\NoReturn;
 
 
@@ -80,4 +81,9 @@ function old(string $campo): string
 function redirect(string $uri): void
 {
     header("Location: ".getBaseURL()."$uri");
+}
+
+function request(): Request
+{
+    return new Request();
 }

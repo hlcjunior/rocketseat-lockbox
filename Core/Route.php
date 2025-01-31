@@ -41,12 +41,22 @@ class Route
         return $this;
     }
 
+    public function put(string $uri, string|array $controller = null, $middleware = null): static
+    {
+        $this->addRoute('PUT', $uri, $controller, $middleware);
+        return $this;
+    }
+
+    public function delete(string $uri, string|array $controller = null, $middleware = null): static
+    {
+        $this->addRoute('DELETE', $uri, $controller, $middleware);
+        return $this;
+    }
+
     #[NoReturn] public function run(): void
     {
         $uri = '/' . str_replace(getBaseURL(), '', parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
-        $httpMethod = $_SERVER['REQUEST_METHOD'];
-
-
+        $httpMethod = request()->post('__method',$_SERVER['REQUEST_METHOD']);
 
         if (!isset($this->routes[$httpMethod][$uri])) {
             abort(404);

@@ -27,4 +27,32 @@ class Nota
             )
         )->fetchAll();
     }
+
+    public static function delete(int $id): void
+    {
+        $db = new Database(config('database'));
+
+        $db->query(
+            'DELETE FROM notas WHERE id = :id',
+            params: [
+                'id' => request()->post('id')
+            ]
+        );
+    }
+
+    public static function update(int $id, string $titulo, string $nota): void
+    {
+        $db = new Database(config('database'));
+
+        $db->query(
+            'UPDATE notas SET titulo = :titulo, nota = :nota, data_atualizacao = :data_atualizacao WHERE id = :id',
+            params: [
+                'titulo' => $titulo,
+                'nota' => $nota,
+                'data_atualizacao' => date('Y-m-d H:i:s'),
+                'id' => $id
+            ]
+        );
+
+    }
 }

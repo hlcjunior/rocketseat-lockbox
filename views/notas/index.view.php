@@ -42,7 +42,9 @@ $validacoes = flash()->get('validacoes');
             <div class="label">
                 <span class="label-text">Sua nota</span>
             </div>
-            <textarea name="nota" class="textarea textarea-bordered h-24"><?= $notaSelecionada->nota ?? '' ?></textarea>
+            <textarea
+                <?php if(!session()->get('mostrar')) : ?>readonly disabled<?php endif; ?>
+                name="nota" class="textarea textarea-bordered h-24"><?= $notaSelecionada->nota() ?? '' ?></textarea>
             <?php if (isset($validacoes['nota'])): ?>
                 <div class="label text-error text-xs"><?= $validacoes['nota'][0] ?></div>
             <?php endif; ?>

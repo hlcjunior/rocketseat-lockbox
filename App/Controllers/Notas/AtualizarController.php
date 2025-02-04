@@ -11,12 +11,14 @@ class AtualizarController
     /** @noinspection PhpVoidFunctionResultUsedInspection */
     #[NoReturn] public function __invoke()
     {
-        $validacao = Validacao::validar([
-            'titulo' => ['required', 'min:3', 'max:255'],
-            'nota' => ['required'],
-            'id' => ['required']
+        $validacao = Validacao::validar(
+            array_merge([
+                'titulo' => ['required', 'min:3', 'max:255'],
+                'id' => ['required']
 
-        ], request()->all());
+            ], session()->get('mostrar') ? ['nota' => ['required']] : []),
+            request()->all()
+        );
 
         if ($validacao->naoPassou()) {
             return redirect('notas?id=' . request()->post('id'));

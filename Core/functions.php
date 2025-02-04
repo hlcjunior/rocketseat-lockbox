@@ -2,6 +2,7 @@
 
 use Core\Flash;
 use Core\Request;
+use Core\Session;
 use JetBrains\PhpStorm\NoReturn;
 
 
@@ -86,4 +87,9 @@ function redirect(string $uri): void
 function request(): Request
 {
     return new Request();
+}
+
+function session(): Session
+{
+    return new Session();
 }

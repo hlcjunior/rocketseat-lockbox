@@ -16,7 +16,7 @@ $validacoes = flash()->get('validacoes');
            <?php if ($nota->id == $notaSelecionada->id): ?>bg-base-200 <?php endif; ?>"
         >
             <?= $nota->titulo ?><br>
-            <span class="text-xs"><?= $nota->id ?></span>
+            <span class="text-xs">id: <?= $nota->id ?></span>
         </a>
     <?php endforeach; ?>
 </div>

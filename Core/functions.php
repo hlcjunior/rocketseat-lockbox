@@ -5,11 +5,11 @@ use Core\Request;
 use Core\Session;
 use JetBrains\PhpStorm\NoReturn;
 
-
 function base_path(string $path): string
 {
-    return __DIR__ . '/../'.$path;
+    return __DIR__ . '/../' . $path;
 }
+
 /** @noinspection PhpUnused */
 #[NoReturn] function dd(...$dump): void
 {
@@ -59,7 +59,11 @@ function config($chave = null): mixed
     $config = require base_path('/config/config.php');
 
     if (strlen($chave) > 0) {
-        return $config[$chave];
+        $tmp = null;
+        foreach (explode('.', $chave) as $index => $key) {
+            $tmp = $index == 0 ? $config[$key] : $tmp[$key];
+        }
+        return $tmp;
     }
 
     return $config;
@@ -81,7 +85,7 @@ function old(string $campo): string
 
 function redirect(string $uri): void
 {
-    header("Location: ".getBaseURL()."$uri");
+    header("Location: " . getBaseURL() . "$uri");
 }
 
 function request(): Request
@@ -92,4 +96,42 @@ function request(): Request
 function session(): Session
 {
     return new Session();
+}
+
+function encrypt($data): string
+{
+    $first_key = base64_decode(config('security.first_key'));
+    $second_key = base64_decode(config('security.second_key'));
+
+    $method = "aes-256-cbc";
+    $iv_length = openssl_cipher_iv_length($method);
+    $iv = openssl_random_pseudo_bytes($iv_length);
+
+    $first_encrypted = openssl_encrypt($data, $method, $first_key, OPENSSL_RAW_DATA, $iv);
+    $second_encrypted = hash_hmac('sha3-512', $first_encrypted, $second_key, true);
+
+    return base64_encode($iv . $second_encrypted . $first_encrypted);
+}
+
+function decrypt($input): bool|string
+{
+    $first_key = base64_decode(config('security.first_key'));
+    $second_key = base64_decode(config('security.second_key'));
+    $mix = base64_decode($input);
+
+    $method = "aes-256-cbc";
+    $iv_length = openssl_cipher_iv_length($method);
+
+    $iv = substr($mix, 0, $iv_length);
+    $second_encrypted = substr($mix, $iv_length, 64);
+    $first_encrypted = substr($mix, $iv_length + 64);
+
+    $data = openssl_decrypt($first_encrypted, $method, $first_key, OPENSSL_RAW_DATA, $iv);
+    $second_encrypted_new = hash_hmac('sha3-512', $first_encrypted, $second_key, true);
+
+    if (hash_equals($second_encrypted, $second_encrypted_new)) {
+        return $data;
+    }
+
+    return false;
 }

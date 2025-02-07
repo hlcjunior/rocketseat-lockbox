@@ -8,3 +8,4 @@
 /.idea/inspectionProfiles/Project_Default.xml
 /database/lockbox.sqlite
 /.idea/vcs.xml
+/.env

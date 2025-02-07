@@ -135,3 +135,9 @@ function decrypt($input): bool|string
 
     return false;
 }
+
+function env(string $key, ?string $default = null)
+{
+    $env = parse_ini_file(base_path('.env'));
+    return $env[$key] ?? $default;
+}

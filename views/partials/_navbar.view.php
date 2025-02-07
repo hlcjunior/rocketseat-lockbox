@@ -8,7 +8,7 @@
                 <?php if(session()->get('mostrar')) : ?>
                     <a href="<?=getBaseURL()?>esconder">🔐</a>
                 <?php else : ?>
-                    <a href="<?=getBaseURL()?>mostrar">👁</a>
+                    <a href="<?=getBaseURL()?>confirmar">👁</a>
                 <?php endif; ?>
             </li>
             <li>

@@ -9,3 +9,5 @@
 /database/lockbox.sqlite
 /.idea/vcs.xml
 /.env
+
+/vendor/
